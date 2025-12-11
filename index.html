@@ -179,7 +179,7 @@
             margin-top: 25px;
         }
 
-        /* Image Upload Styles - IMPROVED */
+        /* Image Upload Styles */
         .image-upload-section {
             margin-bottom: 20px;
         }
@@ -192,43 +192,6 @@
             font-size: 14px;
         }
 
-        .image-upload-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .upload-option-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: var(--dark);
-        }
-
-        .upload-option-btn:hover {
-            border-color: var(--primary);
-            background: #f8fafc;
-        }
-
-        .upload-option-btn.active {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            color: var(--primary-dark);
-        }
-
-        .upload-option-btn i {
-            font-size: 20px;
-        }
-
         .image-upload-box {
             border: 2px dashed var(--border);
             border-radius: var(--radius);
@@ -237,21 +200,11 @@
             cursor: pointer;
             transition: all 0.3s;
             background: white;
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         .image-upload-box:hover {
             border-color: var(--primary);
             background: #f8fafc;
-        }
-
-        .image-upload-box.drag-over {
-            border-color: var(--accent);
-            background: #dcfce7;
         }
 
         .image-upload-icon {
@@ -273,59 +226,6 @@
             display: none;
         }
 
-        /* Camera Preview */
-        .camera-preview {
-            width: 100%;
-            height: 200px;
-            background: #1e293b;
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 15px;
-            position: relative;
-            display: none;
-        }
-
-        #cameraVideo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .camera-controls {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .camera-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: white;
-            color: var(--dark);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .camera-btn.capture {
-            background: var(--primary);
-            color: white;
-        }
-
-        .camera-btn.cancel {
-            background: var(--danger);
-            color: white;
-        }
-
         .image-preview {
             margin-top: 15px;
             display: none;
@@ -334,10 +234,8 @@
         .preview-image {
             width: 100%;
             max-height: 200px;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: var(--radius);
-            background: #f8fafc;
-            padding: 10px;
         }
 
         .image-actions {
@@ -387,15 +285,6 @@
 
         .btn-danger:hover {
             background: #dc2626;
-        }
-
-        .btn-success {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #0da271;
         }
 
         .btn-sm {
@@ -519,8 +408,8 @@
         }
 
         .product-image {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 8px;
             background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
             display: flex;
@@ -655,10 +544,6 @@
             border-left-color: var(--danger);
         }
 
-        .notification.info {
-            border-left-color: var(--primary-light);
-        }
-
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -754,10 +639,6 @@
             .form-actions {
                 flex-direction: column;
             }
-            
-            .image-upload-options {
-                flex-direction: column;
-            }
         }
     </style>
     
@@ -781,7 +662,7 @@
                         <i class="fas fa-store"></i>
                     </div>
                     <div class="brand-text">
-                        <h1>cₕₐₙdₐₙᵢ ₚₐᵣₗₐᵣ ₁₂₇</h1>
+                        <h1>Chandni Parlor 127</h1>
                         <p>Owner Product Management</p>
                     </div>
                 </div>
@@ -830,67 +711,29 @@
                         <input type="number" id="productPrice" class="form-input" placeholder="e.g., 499" min="0" required>
                     </div>
                     
-                    <!-- Image Upload Section - IMPROVED -->
+                    <!-- Image Upload Section -->
                     <div class="image-upload-section">
                         <label class="image-upload-label">Product Photo</label>
-                        
-                        <div class="image-upload-options">
-                            <button type="button" class="upload-option-btn active" id="uploadFromDeviceBtn">
-                                <i class="fas fa-folder-open"></i>
-                                <span>Upload File</span>
-                            </button>
-                            <button type="button" class="upload-option-btn" id="useCameraBtn">
-                                <i class="fas fa-camera"></i>
-                                <span>Take Photo</span>
-                            </button>
-                        </div>
-                        
-                        <!-- Upload from Device -->
                         <div class="image-upload-box" id="imageUploadBox">
                             <div class="image-upload-icon">
                                 <i class="fas fa-cloud-upload-alt"></i>
                             </div>
                             <div class="image-upload-text">
-                                <p>Click to upload or drag & drop</p>
-                                <p style="font-size: 12px; margin-top: 5px;">JPG, PNG, WebP, GIF, SVG (Max 10MB)</p>
+                                <p>Click to upload product photo</p>
+                                <p style="font-size: 12px; margin-top: 5px;">JPG, PNG or WebP (Max 5MB)</p>
                             </div>
                             <input type="file" id="imageFile" accept="image/*">
                         </div>
                         
-                        <!-- Camera Preview -->
-                        <div class="camera-preview" id="cameraPreview">
-                            <video id="cameraVideo" autoplay playsinline></video>
-                            <div class="camera-controls">
-                                <button type="button" class="camera-btn capture" id="capturePhotoBtn">
-                                    <i class="fas fa-camera"></i>
-                                </button>
-                                <button type="button" class="camera-btn cancel" id="cancelCameraBtn">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Image Preview -->
                         <div class="image-preview" id="imagePreview">
                             <img id="previewImage" src="" alt="Preview" class="preview-image">
                             <div class="image-actions">
-                                <button type="button" class="btn btn-success btn-sm" onclick="retryUpload()">
-                                    <i class="fas fa-redo"></i> Try Again
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="changeImage()">
+                                    <i class="fas fa-sync"></i> Change
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="removeImage()">
                                     <i class="fas fa-trash"></i> Remove
                                 </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Upload Status -->
-                        <div id="uploadStatus" style="margin-top: 10px; display: none;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <i class="fas fa-spinner fa-spin" style="color: var(--primary);"></i>
-                                <span style="font-size: 14px; color: var(--dark);">Uploading image...</span>
-                            </div>
-                            <div style="width: 100%; height: 4px; background: #e2e8f0; border-radius: 2px; margin-top: 5px; overflow: hidden;">
-                                <div id="uploadProgressBar" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.3s;"></div>
                             </div>
                         </div>
                     </div>
@@ -949,11 +792,6 @@
         <footer class="main-footer">
             <p>© 2024 Chandni Parlor 127 | Owner Management System</p>
             <p>Products added here will automatically appear on customer website</p>
-            <p style="margin-top: 5px; font-size: 12px;">
-                <i class="fas fa-camera"></i> Camera Upload | 
-                <i class="fas fa-file-upload"></i> File Upload | 
-                <i class="fas fa-sync"></i> Real-time Sync
-            </p>
         </footer>
     </div>
 
@@ -977,7 +815,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Code - FIXED IMAGE UPLOAD -->
+    <!-- JavaScript Code - SIMPLIFIED VERSION -->
     <script>
         // ============================================
         // FIREBASE CONFIGURATION
@@ -1002,8 +840,6 @@
 
         async function initApp() {
             try {
-                console.log('🚀 Initializing Owner Portal...');
-                
                 // Initialize Firebase
                 if (!firebase.apps.length) {
                     firebase.initializeApp(firebaseConfig);
@@ -1044,46 +880,20 @@
         let editingProductId = null;
         let productToDelete = null;
         let currentImageFile = null;
-        let currentImageUrl = null;
-        let cameraStream = null;
-        let uploadMode = 'device'; // 'device' or 'camera'
 
         // ============================================
         // EVENT LISTENERS SETUP
         // ============================================
         function setupEventListeners() {
-            console.log('🔧 Setting up event listeners...');
-            
             // Product form
             document.getElementById('productForm').addEventListener('submit', handleProductSubmit);
             document.getElementById('clearBtn').addEventListener('click', clearForm);
             
-            // Image upload options
-            document.getElementById('uploadFromDeviceBtn').addEventListener('click', () => {
-                setUploadMode('device');
-            });
-            
-            document.getElementById('useCameraBtn').addEventListener('click', () => {
-                setUploadMode('camera');
-                startCamera();
-            });
-            
-            // File upload
+            // Image upload
             document.getElementById('imageUploadBox').addEventListener('click', () => {
                 document.getElementById('imageFile').click();
             });
-            
-            document.getElementById('imageFile').addEventListener('change', handleFileUpload);
-            
-            // Drag and drop
-            const uploadBox = document.getElementById('imageUploadBox');
-            uploadBox.addEventListener('dragover', handleDragOver);
-            uploadBox.addEventListener('dragleave', handleDragLeave);
-            uploadBox.addEventListener('drop', handleDrop);
-            
-            // Camera controls
-            document.getElementById('capturePhotoBtn').addEventListener('click', capturePhoto);
-            document.getElementById('cancelCameraBtn').addEventListener('click', stopCamera);
+            document.getElementById('imageFile').addEventListener('change', handleImageUpload);
             
             // Search
             document.getElementById('searchBtn').addEventListener('click', performSearch);
@@ -1094,74 +904,23 @@
                 document.getElementById('deleteModal').classList.remove('active');
             });
             document.getElementById('confirmDelete').addEventListener('click', confirmDelete);
-            
-            console.log('✅ Event listeners setup complete');
         }
 
         // ============================================
-        // IMAGE UPLOAD FUNCTIONS - FIXED
+        // IMAGE UPLOAD FUNCTIONS
         // ============================================
-        function setUploadMode(mode) {
-            uploadMode = mode;
-            
-            // Update button states
-            document.getElementById('uploadFromDeviceBtn').classList.toggle('active', mode === 'device');
-            document.getElementById('useCameraBtn').classList.toggle('active', mode === 'camera');
-            
-            // Show/hide sections
-            if (mode === 'device') {
-                document.getElementById('imageUploadBox').style.display = 'flex';
-                document.getElementById('cameraPreview').style.display = 'none';
-                stopCamera();
-            } else {
-                document.getElementById('imageUploadBox').style.display = 'none';
-                document.getElementById('cameraPreview').style.display = 'block';
-            }
-        }
-
-        // Drag and drop functions
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('imageUploadBox').classList.add('drag-over');
-        }
-
-        function handleDragLeave(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('imageUploadBox').classList.remove('drag-over');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('imageUploadBox').classList.remove('drag-over');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleImageFile(files[0]);
-            }
-        }
-
-        function handleFileUpload(event) {
+        function handleImageUpload(event) {
             const file = event.target.files[0];
-            if (file) {
-                handleImageFile(file);
-            }
-        }
-
-        function handleImageFile(file) {
-            console.log('📁 Selected file:', file.name, file.type, file.size);
+            if (!file) return;
             
-            // Check if it's an image
+            // Validate file
             if (!file.type.startsWith('image/')) {
                 showNotification('Please select an image file', 'error');
                 return;
             }
             
-            // Check file size (increased to 10MB)
-            if (file.size > 10 * 1024 * 1024) {
-                showNotification('Image size should be less than 10MB', 'error');
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                showNotification('Image size should be less than 5MB', 'error');
                 return;
             }
             
@@ -1177,161 +936,39 @@
             reader.readAsDataURL(file);
         }
 
-        // Camera functions
-        async function startCamera() {
-            try {
-                // Stop any existing stream
-                if (cameraStream) {
-                    cameraStream.getTracks().forEach(track => track.stop());
-                }
-                
-                // Get camera access
-                cameraStream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: 'environment', // Use back camera
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    },
-                    audio: false
-                });
-                
-                const videoElement = document.getElementById('cameraVideo');
-                videoElement.srcObject = cameraStream;
-                
-            } catch (error) {
-                console.error('Camera access error:', error);
-                showNotification('Camera access denied or not available', 'error');
-                setUploadMode('device'); // Fallback to file upload
-            }
-        }
-
-        function stopCamera() {
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-                cameraStream = null;
-            }
-            setUploadMode('device');
-        }
-
-        function capturePhoto() {
-            if (!cameraStream) return;
-            
-            const videoElement = document.getElementById('cameraVideo');
-            const canvas = document.createElement('canvas');
-            canvas.width = videoElement.videoWidth;
-            canvas.height = videoElement.videoHeight;
-            
-            const context = canvas.getContext('2d');
-            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-            
-            // Convert canvas to blob
-            canvas.toBlob(function(blob) {
-                if (blob) {
-                    // Create a file from blob
-                    const fileName = `photo_${Date.now()}.jpg`;
-                    const file = new File([blob], fileName, { type: 'image/jpeg' });
-                    
-                    // Handle the captured photo
-                    handleImageFile(file);
-                    
-                    // Stop camera after capture
-                    stopCamera();
-                }
-            }, 'image/jpeg', 0.8); // 80% quality
-        }
-
-        function retryUpload() {
-            // Clear current image and show upload options
-            currentImageFile = null;
-            currentImageUrl = null;
-            document.getElementById('imagePreview').style.display = 'none';
-            document.getElementById('imageFile').value = '';
-            
-            // Show upload options based on current mode
-            if (uploadMode === 'camera') {
-                startCamera();
-            }
+        function changeImage() {
+            document.getElementById('imageFile').click();
         }
 
         function removeImage() {
             currentImageFile = null;
-            currentImageUrl = null;
+            document.getElementById('imageFile').value = '';
             document.getElementById('previewImage').src = '';
             document.getElementById('imagePreview').style.display = 'none';
-            document.getElementById('imageFile').value = '';
             showNotification('Image removed', 'warning');
         }
 
-        // ============================================
-        // FIREBASE IMAGE UPLOAD - FIXED VERSION
-        // ============================================
         async function uploadImageToFirebase(productId) {
-            if (!currentImageFile) {
-                console.log('ℹ️ No image to upload');
-                return null;
-            }
+            if (!currentImageFile) return null;
             
             try {
-                console.log('📤 Starting image upload...');
-                
-                // Show upload status
-                document.getElementById('uploadStatus').style.display = 'block';
-                document.getElementById('uploadProgressBar').style.width = '0%';
-                
-                // Create storage reference
                 const storageRef = window.storage.ref();
                 const timestamp = Date.now();
-                const fileExtension = currentImageFile.name.split('.').pop() || 'jpg';
-                const fileName = `product_${productId}_${timestamp}.${fileExtension}`;
+                const fileName = `product_${timestamp}_${currentImageFile.name}`;
                 const imageRef = storageRef.child(`products/${productId}/${fileName}`);
                 
-                // Upload file with progress tracking
-                const uploadTask = imageRef.put(currentImageFile);
+                // Show upload progress
+                showNotification('Uploading image...', 'info');
                 
-                return new Promise((resolve, reject) => {
-                    uploadTask.on('state_changed',
-                        (snapshot) => {
-                            // Upload progress
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            document.getElementById('uploadProgressBar').style.width = progress + '%';
-                            console.log(`Upload progress: ${progress.toFixed(1)}%`);
-                        },
-                        (error) => {
-                            // Upload error
-                            console.error('❌ Upload error:', error);
-                            document.getElementById('uploadStatus').style.display = 'none';
-                            showNotification('Image upload failed: ' + error.message, 'error');
-                            reject(error);
-                        },
-                        async () => {
-                            // Upload completed successfully
-                            try {
-                                // Get download URL
-                                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-                                console.log('✅ Image uploaded successfully:', downloadURL);
-                                
-                                // Hide upload status
-                                document.getElementById('uploadStatus').style.display = 'none';
-                                
-                                // Save the URL for later use
-                                currentImageUrl = downloadURL;
-                                
-                                showNotification('Image uploaded successfully', 'success');
-                                resolve(downloadURL);
-                            } catch (error) {
-                                console.error('❌ Error getting download URL:', error);
-                                document.getElementById('uploadStatus').style.display = 'none';
-                                showNotification('Error getting image URL', 'error');
-                                reject(error);
-                            }
-                        }
-                    );
-                });
+                const snapshot = await imageRef.put(currentImageFile);
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                
+                showNotification('Image uploaded successfully', 'success');
+                return downloadURL;
                 
             } catch (error) {
-                console.error('❌ Upload process error:', error);
-                document.getElementById('uploadStatus').style.display = 'none';
-                showNotification('Upload error: ' + error.message, 'error');
+                console.error('Error uploading image:', error);
+                showNotification('Error uploading image', 'error');
                 return null;
             }
         }
@@ -1341,7 +978,6 @@
         // ============================================
         async function handleProductSubmit(e) {
             e.preventDefault();
-            console.log('💾 Saving product...');
             
             // Get form values
             const name = document.getElementById('productName').value.trim();
@@ -1372,16 +1008,6 @@
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
             
             try {
-                // Generate product ID
-                const productId = editingProductId || window.db.ref('products').push().key;
-                
-                // Upload image first if exists
-                let imageUrl = currentImageUrl;
-                if (currentImageFile && !currentImageUrl) {
-                    console.log('📸 Uploading image before saving product...');
-                    imageUrl = await uploadImageToFirebase(productId);
-                }
-                
                 // Prepare product data
                 const productData = {
                     name: name,
@@ -1395,12 +1021,17 @@
                     syncToCustomer: true
                 };
                 
-                // Add image URL if available
-                if (imageUrl) {
-                    productData.imageUrl = imageUrl;
-                }
+                console.log('Saving product:', productData);
                 
-                console.log('💾 Saving product data:', productData);
+                // Upload image if exists
+                let imageUrl = '';
+                if (currentImageFile) {
+                    const imageId = editingProductId || window.db.ref('products').push().key;
+                    imageUrl = await uploadImageToFirebase(imageId);
+                    if (imageUrl) {
+                        productData.imageUrl = imageUrl;
+                    }
+                }
                 
                 if (editingProductId) {
                     // Update existing product
@@ -1450,10 +1081,6 @@
                             ...data[key]
                         });
                     });
-                    
-                    console.log(`📦 Loaded ${products.length} products`);
-                } else {
-                    console.log('ℹ️ No products found in database');
                 }
                 
                 displayProducts();
@@ -1482,7 +1109,7 @@
                                 <div class="product-image">
                                     ${product.imageUrl ? 
                                         `<img src="${product.imageUrl}" alt="${product.name}" 
-                                              onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<i class=\"fas fa-box\"></i>';" />` :
+                                              onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\"fas fa-box\"></i>';" />` :
                                         `<i class="fas fa-box"></i>`
                                     }
                                 </div>
@@ -1509,7 +1136,7 @@
                                 <button class="action-btn toggle-btn" onclick="toggleStock('${product.id}', ${product.stock})" title="${isAvailable ? 'Mark Out of Stock' : 'Mark Available'}">
                                     <i class="fas ${isAvailable ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
                                 </button>
-                                <button class="action-btn delete-btn" onclick="showDeleteModal('${product.id}', '${product.name.replace(/'/g, "\\'")}')" title="Delete">
+                                <button class="action-btn delete-btn" onclick="showDeleteModal('${product.id}', '${product.name}')" title="Delete">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -1521,10 +1148,7 @@
 
         function editProduct(productId) {
             const product = products.find(p => p.id === productId);
-            if (!product) {
-                showNotification('Product not found', 'error');
-                return;
-            }
+            if (!product) return;
             
             editingProductId = productId;
             
@@ -1538,11 +1162,9 @@
             if (product.imageUrl) {
                 document.getElementById('previewImage').src = product.imageUrl;
                 document.getElementById('imagePreview').style.display = 'block';
-                currentImageUrl = product.imageUrl;
-                currentImageFile = null; // No file, just URL
+                currentImageFile = null; // Keep existing image
             } else {
                 document.getElementById('imagePreview').style.display = 'none';
-                currentImageUrl = null;
                 currentImageFile = null;
             }
             
@@ -1569,9 +1191,8 @@
 
         function showDeleteModal(productId, productName) {
             productToDelete = productId;
-            const displayName = productName || 'this product';
             document.getElementById('deleteMessage').textContent = 
-                `Are you sure you want to delete "${displayName}"?`;
+                `Are you sure you want to delete "${productName}"?`;
             document.getElementById('deleteModal').classList.add('active');
         }
 
@@ -1592,27 +1213,16 @@
         }
 
         function clearForm() {
-            console.log('🧹 Clearing form');
-            
             editingProductId = null;
             currentImageFile = null;
-            currentImageUrl = null;
-            
-            // Reset form
             document.getElementById('productForm').reset();
             document.getElementById('productCategory').value = '';
             document.getElementById('imagePreview').style.display = 'none';
             document.getElementById('imageFile').value = '';
-            document.getElementById('uploadStatus').style.display = 'none';
-            
-            // Reset to device upload mode
-            setUploadMode('device');
             
             // Reset button text
             const saveBtn = document.getElementById('saveBtn');
             saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Product';
-            
-            showNotification('Form cleared. Ready for new product.', 'info');
         }
 
         function performSearch() {
@@ -1628,7 +1238,6 @@
                 (product.category && product.category.toLowerCase().includes(query))
             );
             
-            console.log(`🔍 Found ${searchResults.length} results`);
             displayProducts(searchResults);
         }
 
@@ -1644,23 +1253,17 @@
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
                 <span>${message}</span>
             `;
             
             document.body.appendChild(notification);
             
-            // Auto-remove after 5 seconds
+            // Auto-remove after 3 seconds
             setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.style.animation = 'slideIn 0.3s ease reverse';
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.remove();
-                        }
-                    }, 300);
-                }
-            }, 5000);
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
         }
 
         // ============================================
@@ -1669,19 +1272,11 @@
         window.editProduct = editProduct;
         window.toggleStock = toggleStock;
         window.showDeleteModal = showDeleteModal;
-        window.retryUpload = retryUpload;
+        window.changeImage = changeImage;
         window.removeImage = removeImage;
 
-        // Clean up camera on page unload
-        window.addEventListener('beforeunload', () => {
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-            }
-        });
-
         console.log('🚀 Owner Portal Loaded');
-        console.log('📸 Image Upload System: FIXED & IMPROVED');
-        console.log('🎥 Camera Capture: ENABLED');
+        console.log('📸 Image Upload Enabled');
         console.log('🔗 No Login Required - Direct Access');
     </script>
 </body>
