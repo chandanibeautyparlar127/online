@@ -8,9 +8,10 @@
     <!-- Firebase CDN -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
     
     <style>
-        /* Same CSS as before - no changes */
+        /* ===== RESET & BASE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -41,7 +42,7 @@
             line-height: 1.6;
         }
 
-        /* Loading Screen */
+        /* ===== LOADING SCREEN ===== */
         #loadingScreen {
             position: fixed;
             top: 0;
@@ -71,121 +72,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Login Page */
-        .login-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .login-box {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .login-logo {
-            margin-bottom: 30px;
-        }
-
-        .login-logo i {
-            font-size: 48px;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .login-logo h1 {
-            font-size: 24px;
-            color: var(--dark);
-            margin-bottom: 5px;
-        }
-
-        .login-logo p {
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 16px;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: var(--radius);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            width: 100%;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
-        }
-
-        .btn-secondary {
-            background: #e2e8f0;
-            color: var(--dark);
-        }
-
-        .btn-secondary:hover {
-            background: #cbd5e1;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        /* Main Container */
+        /* ===== MAIN CONTAINER ===== */
         .main-container {
             display: none;
         }
@@ -194,7 +81,7 @@
             display: block;
         }
 
-        /* Header */
+        /* ===== HEADER ===== */
         .main-header {
             background: var(--glass);
             backdrop-filter: blur(10px);
@@ -249,7 +136,7 @@
             align-items: center;
         }
 
-        /* Main Content */
+        /* ===== MAIN CONTENT ===== */
         .main-content {
             max-width: 1200px;
             margin: 30px auto;
@@ -265,7 +152,7 @@
             }
         }
 
-        /* Sidebar Form */
+        /* ===== SIDEBAR FORM ===== */
         .sidebar {
             background: var(--glass);
             backdrop-filter: blur(10px);
@@ -292,7 +179,259 @@
             margin-top: 25px;
         }
 
-        /* Products Section */
+        /* Image Upload Styles - IMPROVED */
+        .image-upload-section {
+            margin-bottom: 20px;
+        }
+
+        .image-upload-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .image-upload-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .upload-option-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .upload-option-btn:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
+        .upload-option-btn.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .upload-option-btn i {
+            font-size: 20px;
+        }
+
+        .image-upload-box {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-upload-box:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
+        .image-upload-box.drag-over {
+            border-color: var(--accent);
+            background: #dcfce7;
+        }
+
+        .image-upload-icon {
+            font-size: 40px;
+            color: var(--border);
+            margin-bottom: 10px;
+        }
+
+        .image-upload-text {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .image-upload-text p {
+            margin: 5px 0;
+        }
+
+        .image-upload-box input {
+            display: none;
+        }
+
+        /* Camera Preview */
+        .camera-preview {
+            width: 100%;
+            height: 200px;
+            background: #1e293b;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            display: none;
+        }
+
+        #cameraVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .camera-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: var(--dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .camera-btn.capture {
+            background: var(--primary);
+            color: white;
+        }
+
+        .camera-btn.cancel {
+            background: var(--danger);
+            color: white;
+        }
+
+        .image-preview {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .preview-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: var(--radius);
+            background: #f8fafc;
+            padding: 10px;
+        }
+
+        .image-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-success {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* ===== PRODUCTS SECTION ===== */
         .products-section {
             background: var(--glass);
             backdrop-filter: blur(10px);
@@ -338,7 +477,7 @@
             cursor: pointer;
         }
 
-        /* Products Table */
+        /* ===== PRODUCTS TABLE ===== */
         .products-table {
             width: 100%;
             border-collapse: collapse;
@@ -380,8 +519,8 @@
         }
 
         .product-image {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 8px;
             background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
             display: flex;
@@ -390,6 +529,7 @@
             color: #64748b;
             font-size: 20px;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .product-image img {
@@ -477,7 +617,7 @@
             color: white;
         }
 
-        /* No Products */
+        /* ===== NO PRODUCTS ===== */
         .no-products {
             text-align: center;
             padding: 50px 20px;
@@ -490,7 +630,7 @@
             opacity: 0.5;
         }
 
-        /* Notification */
+        /* ===== NOTIFICATION ===== */
         .notification {
             position: fixed;
             top: 20px;
@@ -515,6 +655,10 @@
             border-left-color: var(--danger);
         }
 
+        .notification.info {
+            border-left-color: var(--primary-light);
+        }
+
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -526,7 +670,7 @@
             }
         }
 
-        /* Modal */
+        /* ===== MODAL ===== */
         .modal {
             position: fixed;
             top: 0;
@@ -571,7 +715,7 @@
             justify-content: flex-end;
         }
 
-        /* Footer */
+        /* ===== FOOTER ===== */
         .main-footer {
             background: var(--glass);
             backdrop-filter: blur(10px);
@@ -582,7 +726,7 @@
             font-size: 14px;
         }
 
-        /* Responsive */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -610,6 +754,10 @@
             .form-actions {
                 flex-direction: column;
             }
+            
+            .image-upload-options {
+                flex-direction: column;
+            }
         }
     </style>
     
@@ -623,37 +771,6 @@
         <p>Loading Owner Portal...</p>
     </div>
 
-    <!-- Login Container -->
-    <div class="login-container" id="loginContainer">
-        <div class="login-box">
-            <div class="login-logo">
-                <i class="fas fa-user-shield"></i>
-                <h1>Chandni Parlor 127</h1>
-                <p>Owner Portal</p>
-            </div>
-            
-            <form id="loginForm">
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" id="username" class="form-input" placeholder="Enter owner username" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" id="password" class="form-input" placeholder="Enter owner password" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-            
-            <div style="margin-top: 20px; font-size: 12px; color: #64748b;">
-                <p>Default: username: <strong>owner</strong>, password: <strong>owner123</strong></p>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Container -->
     <div class="main-container" id="mainContainer">
         <!-- Header -->
@@ -664,15 +781,15 @@
                         <i class="fas fa-store"></i>
                     </div>
                     <div class="brand-text">
-                        <h1>Chandni Parlor 127</h1>
+                        <h1>cₕₐₙdₐₙᵢ ₚₐᵣₗₐᵣ ₁₂₇</h1>
                         <p>Owner Product Management</p>
                     </div>
                 </div>
                 
                 <div class="header-controls">
-                    <button class="btn btn-secondary" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
+                    <div style="font-size: 14px; color: #64748b;">
+                        <i class="fas fa-user"></i> Owner
+                    </div>
                 </div>
             </div>
         </header>
@@ -713,12 +830,69 @@
                         <input type="number" id="productPrice" class="form-input" placeholder="e.g., 499" min="0" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label">Image URL (Optional)</label>
-                        <input type="text" id="productImage" class="form-input" placeholder="https://example.com/image.jpg">
-                        <small style="color: #64748b; font-size: 12px; display: block; margin-top: 5px;">
-                            Leave empty for default beauty icon
-                        </small>
+                    <!-- Image Upload Section - IMPROVED -->
+                    <div class="image-upload-section">
+                        <label class="image-upload-label">Product Photo</label>
+                        
+                        <div class="image-upload-options">
+                            <button type="button" class="upload-option-btn active" id="uploadFromDeviceBtn">
+                                <i class="fas fa-folder-open"></i>
+                                <span>Upload File</span>
+                            </button>
+                            <button type="button" class="upload-option-btn" id="useCameraBtn">
+                                <i class="fas fa-camera"></i>
+                                <span>Take Photo</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Upload from Device -->
+                        <div class="image-upload-box" id="imageUploadBox">
+                            <div class="image-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="image-upload-text">
+                                <p>Click to upload or drag & drop</p>
+                                <p style="font-size: 12px; margin-top: 5px;">JPG, PNG, WebP, GIF, SVG (Max 10MB)</p>
+                            </div>
+                            <input type="file" id="imageFile" accept="image/*">
+                        </div>
+                        
+                        <!-- Camera Preview -->
+                        <div class="camera-preview" id="cameraPreview">
+                            <video id="cameraVideo" autoplay playsinline></video>
+                            <div class="camera-controls">
+                                <button type="button" class="camera-btn capture" id="capturePhotoBtn">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                                <button type="button" class="camera-btn cancel" id="cancelCameraBtn">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Preview -->
+                        <div class="image-preview" id="imagePreview">
+                            <img id="previewImage" src="" alt="Preview" class="preview-image">
+                            <div class="image-actions">
+                                <button type="button" class="btn btn-success btn-sm" onclick="retryUpload()">
+                                    <i class="fas fa-redo"></i> Try Again
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="removeImage()">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Upload Status -->
+                        <div id="uploadStatus" style="margin-top: 10px; display: none;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-spinner fa-spin" style="color: var(--primary);"></i>
+                                <span style="font-size: 14px; color: var(--dark);">Uploading image...</span>
+                            </div>
+                            <div style="width: 100%; height: 4px; background: #e2e8f0; border-radius: 2px; margin-top: 5px; overflow: hidden;">
+                                <div id="uploadProgressBar" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.3s;"></div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-actions">
@@ -775,6 +949,11 @@
         <footer class="main-footer">
             <p>© 2024 Chandni Parlor 127 | Owner Management System</p>
             <p>Products added here will automatically appear on customer website</p>
+            <p style="margin-top: 5px; font-size: 12px;">
+                <i class="fas fa-camera"></i> Camera Upload | 
+                <i class="fas fa-file-upload"></i> File Upload | 
+                <i class="fas fa-sync"></i> Real-time Sync
+            </p>
         </footer>
     </div>
 
@@ -798,10 +977,10 @@
         </div>
     </div>
 
-    <!-- JavaScript Code - COMPLETELY WORKING VERSION -->
+    <!-- JavaScript Code - FIXED IMAGE UPLOAD -->
     <script>
         // ============================================
-        // FIREBASE CONFIGURATION - USING YOUR DATABASE
+        // FIREBASE CONFIGURATION
         // ============================================
         const firebaseConfig = {
             apiKey: "AIzaSyCEx0bVxJlNhCgGxQW5_qHYRlhvNmg10nw",
@@ -823,52 +1002,35 @@
 
         async function initApp() {
             try {
-                console.log('🚀 Initializing Firebase...');
+                console.log('🚀 Initializing Owner Portal...');
                 
-                // Check if Firebase is already initialized
+                // Initialize Firebase
                 if (!firebase.apps.length) {
                     firebase.initializeApp(firebaseConfig);
-                    console.log('✅ Firebase App Initialized');
-                } else {
-                    console.log('✅ Firebase App Already Initialized');
                 }
                 
-                // Get database reference
                 window.db = firebase.database();
-                console.log('✅ Database Reference Obtained');
+                window.storage = firebase.storage();
                 
-                // Test connection
-                const testRef = window.db.ref('testConnection');
-                await testRef.set({
-                    timestamp: new Date().toISOString(),
-                    message: 'Connection test from Owner Portal',
-                    app: 'Chandni Parlor 127'
-                });
-                console.log('✅ Database Connection Test Successful');
+                console.log('✅ Firebase initialized successfully');
                 
-                // Remove test data
-                await testRef.remove();
-                
-                // Show login screen
+                // Directly show main content (no login)
                 setTimeout(() => {
                     document.getElementById('loadingScreen').style.display = 'none';
-                    document.getElementById('loginContainer').style.display = 'flex';
-                    console.log('✅ Login screen displayed');
-                }, 500);
+                    document.getElementById('mainContainer').classList.add('active');
+                }, 1000);
                 
                 setupEventListeners();
-                checkAuth();
+                loadProducts();
                 
             } catch (error) {
-                console.error('❌ Initialization Error:', error);
+                console.error('❌ Firebase initialization error:', error);
                 document.getElementById('loadingScreen').innerHTML = `
                     <div style="text-align: center; color: white; padding: 20px;">
                         <i class="fas fa-check-circle" style="font-size: 48px; margin-bottom: 20px; color: #10b981;"></i>
-                        <h2>Firebase Connected!</h2>
-                        <p style="margin: 20px 0;">Database: online-shopping-c3081</p>
-                        <p>But authentication error occurred.</p>
+                        <h2>Connected!</h2>
                         <button onclick="location.reload()" style="margin-top: 30px; padding: 12px 24px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                            <i class="fas fa-redo"></i> Continue to Login
+                            Continue to Dashboard
                         </button>
                     </div>
                 `;
@@ -878,16 +1040,13 @@
         // ============================================
         // APPLICATION STATE
         // ============================================
-        let currentUser = null;
         let products = [];
         let editingProductId = null;
         let productToDelete = null;
-
-        // Owner credentials
-        const OWNER_CREDENTIALS = {
-            username: "owner",
-            password: "owner123"
-        };
+        let currentImageFile = null;
+        let currentImageUrl = null;
+        let cameraStream = null;
+        let uploadMode = 'device'; // 'device' or 'camera'
 
         // ============================================
         // EVENT LISTENERS SETUP
@@ -895,15 +1054,36 @@
         function setupEventListeners() {
             console.log('🔧 Setting up event listeners...');
             
-            // Login form
-            document.getElementById('loginForm').addEventListener('submit', handleLogin);
-            
-            // Logout button
-            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
-            
             // Product form
             document.getElementById('productForm').addEventListener('submit', handleProductSubmit);
             document.getElementById('clearBtn').addEventListener('click', clearForm);
+            
+            // Image upload options
+            document.getElementById('uploadFromDeviceBtn').addEventListener('click', () => {
+                setUploadMode('device');
+            });
+            
+            document.getElementById('useCameraBtn').addEventListener('click', () => {
+                setUploadMode('camera');
+                startCamera();
+            });
+            
+            // File upload
+            document.getElementById('imageUploadBox').addEventListener('click', () => {
+                document.getElementById('imageFile').click();
+            });
+            
+            document.getElementById('imageFile').addEventListener('change', handleFileUpload);
+            
+            // Drag and drop
+            const uploadBox = document.getElementById('imageUploadBox');
+            uploadBox.addEventListener('dragover', handleDragOver);
+            uploadBox.addEventListener('dragleave', handleDragLeave);
+            uploadBox.addEventListener('drop', handleDrop);
+            
+            // Camera controls
+            document.getElementById('capturePhotoBtn').addEventListener('click', capturePhoto);
+            document.getElementById('cancelCameraBtn').addEventListener('click', stopCamera);
             
             // Search
             document.getElementById('searchBtn').addEventListener('click', performSearch);
@@ -919,111 +1099,255 @@
         }
 
         // ============================================
-        // AUTHENTICATION FUNCTIONS
+        // IMAGE UPLOAD FUNCTIONS - FIXED
         // ============================================
-        function handleLogin(e) {
+        function setUploadMode(mode) {
+            uploadMode = mode;
+            
+            // Update button states
+            document.getElementById('uploadFromDeviceBtn').classList.toggle('active', mode === 'device');
+            document.getElementById('useCameraBtn').classList.toggle('active', mode === 'camera');
+            
+            // Show/hide sections
+            if (mode === 'device') {
+                document.getElementById('imageUploadBox').style.display = 'flex';
+                document.getElementById('cameraPreview').style.display = 'none';
+                stopCamera();
+            } else {
+                document.getElementById('imageUploadBox').style.display = 'none';
+                document.getElementById('cameraPreview').style.display = 'block';
+            }
+        }
+
+        // Drag and drop functions
+        function handleDragOver(e) {
             e.preventDefault();
-            console.log('🔐 Login attempt...');
+            e.stopPropagation();
+            document.getElementById('imageUploadBox').classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('imageUploadBox').classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('imageUploadBox').classList.remove('drag-over');
             
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            
-            // Simple authentication
-            if (username === OWNER_CREDENTIALS.username && password === OWNER_CREDENTIALS.password) {
-                currentUser = { 
-                    username: username, 
-                    role: 'owner',
-                    loginTime: new Date().toISOString()
-                };
-                
-                // Save to localStorage
-                localStorage.setItem('chandniOwner', JSON.stringify(currentUser));
-                console.log('✅ Login successful, user saved to localStorage');
-                
-                showMainContent();
-                loadProducts();
-                showNotification('Login successful! Welcome Owner.', 'success');
-            } else {
-                console.log('❌ Invalid credentials');
-                showNotification('Invalid username or password', 'error');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleImageFile(files[0]);
             }
         }
 
-        function handleLogout() {
-            console.log('👋 Logging out...');
-            
-            if (currentUser && window.db) {
-                // Save logout record
-                const logoutRef = window.db.ref('ownerLogs').push();
-                logoutRef.set({
-                    username: currentUser.username,
-                    action: 'logout',
-                    timestamp: new Date().toISOString()
-                });
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleImageFile(file);
             }
-            
-            currentUser = null;
-            localStorage.removeItem('chandniOwner');
-            showLogin();
-            showNotification('Logged out successfully', 'success');
         }
 
-        function checkAuth() {
-            console.log('🔍 Checking authentication...');
-            const saved = localStorage.getItem('chandniOwner');
+        function handleImageFile(file) {
+            console.log('📁 Selected file:', file.name, file.type, file.size);
             
-            if (saved) {
-                try {
-                    currentUser = JSON.parse(saved);
-                    console.log('✅ User found in localStorage:', currentUser.username);
-                    showMainContent();
-                    loadProducts();
-                } catch (error) {
-                    console.error('❌ Error parsing saved user:', error);
-                    localStorage.removeItem('chandniOwner');
+            // Check if it's an image
+            if (!file.type.startsWith('image/')) {
+                showNotification('Please select an image file', 'error');
+                return;
+            }
+            
+            // Check file size (increased to 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showNotification('Image size should be less than 10MB', 'error');
+                return;
+            }
+            
+            currentImageFile = file;
+            
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+                showNotification('Image selected successfully', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Camera functions
+        async function startCamera() {
+            try {
+                // Stop any existing stream
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
                 }
-            } else {
-                console.log('ℹ️ No saved user found');
+                
+                // Get camera access
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment', // Use back camera
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                });
+                
+                const videoElement = document.getElementById('cameraVideo');
+                videoElement.srcObject = cameraStream;
+                
+            } catch (error) {
+                console.error('Camera access error:', error);
+                showNotification('Camera access denied or not available', 'error');
+                setUploadMode('device'); // Fallback to file upload
+            }
+        }
+
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            setUploadMode('device');
+        }
+
+        function capturePhoto() {
+            if (!cameraStream) return;
+            
+            const videoElement = document.getElementById('cameraVideo');
+            const canvas = document.createElement('canvas');
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            
+            const context = canvas.getContext('2d');
+            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+            
+            // Convert canvas to blob
+            canvas.toBlob(function(blob) {
+                if (blob) {
+                    // Create a file from blob
+                    const fileName = `photo_${Date.now()}.jpg`;
+                    const file = new File([blob], fileName, { type: 'image/jpeg' });
+                    
+                    // Handle the captured photo
+                    handleImageFile(file);
+                    
+                    // Stop camera after capture
+                    stopCamera();
+                }
+            }, 'image/jpeg', 0.8); // 80% quality
+        }
+
+        function retryUpload() {
+            // Clear current image and show upload options
+            currentImageFile = null;
+            currentImageUrl = null;
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imageFile').value = '';
+            
+            // Show upload options based on current mode
+            if (uploadMode === 'camera') {
+                startCamera();
+            }
+        }
+
+        function removeImage() {
+            currentImageFile = null;
+            currentImageUrl = null;
+            document.getElementById('previewImage').src = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imageFile').value = '';
+            showNotification('Image removed', 'warning');
+        }
+
+        // ============================================
+        // FIREBASE IMAGE UPLOAD - FIXED VERSION
+        // ============================================
+        async function uploadImageToFirebase(productId) {
+            if (!currentImageFile) {
+                console.log('ℹ️ No image to upload');
+                return null;
+            }
+            
+            try {
+                console.log('📤 Starting image upload...');
+                
+                // Show upload status
+                document.getElementById('uploadStatus').style.display = 'block';
+                document.getElementById('uploadProgressBar').style.width = '0%';
+                
+                // Create storage reference
+                const storageRef = window.storage.ref();
+                const timestamp = Date.now();
+                const fileExtension = currentImageFile.name.split('.').pop() || 'jpg';
+                const fileName = `product_${productId}_${timestamp}.${fileExtension}`;
+                const imageRef = storageRef.child(`products/${productId}/${fileName}`);
+                
+                // Upload file with progress tracking
+                const uploadTask = imageRef.put(currentImageFile);
+                
+                return new Promise((resolve, reject) => {
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            // Upload progress
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            document.getElementById('uploadProgressBar').style.width = progress + '%';
+                            console.log(`Upload progress: ${progress.toFixed(1)}%`);
+                        },
+                        (error) => {
+                            // Upload error
+                            console.error('❌ Upload error:', error);
+                            document.getElementById('uploadStatus').style.display = 'none';
+                            showNotification('Image upload failed: ' + error.message, 'error');
+                            reject(error);
+                        },
+                        async () => {
+                            // Upload completed successfully
+                            try {
+                                // Get download URL
+                                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                                console.log('✅ Image uploaded successfully:', downloadURL);
+                                
+                                // Hide upload status
+                                document.getElementById('uploadStatus').style.display = 'none';
+                                
+                                // Save the URL for later use
+                                currentImageUrl = downloadURL;
+                                
+                                showNotification('Image uploaded successfully', 'success');
+                                resolve(downloadURL);
+                            } catch (error) {
+                                console.error('❌ Error getting download URL:', error);
+                                document.getElementById('uploadStatus').style.display = 'none';
+                                showNotification('Error getting image URL', 'error');
+                                reject(error);
+                            }
+                        }
+                    );
+                });
+                
+            } catch (error) {
+                console.error('❌ Upload process error:', error);
+                document.getElementById('uploadStatus').style.display = 'none';
+                showNotification('Upload error: ' + error.message, 'error');
+                return null;
             }
         }
 
         // ============================================
-        // VIEW MANAGEMENT
-        // ============================================
-        function showLogin() {
-            console.log('📱 Showing login screen');
-            document.getElementById('loginContainer').style.display = 'flex';
-            document.getElementById('mainContainer').classList.remove('active');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
-
-        function showMainContent() {
-            console.log('🏠 Showing main content');
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('mainContainer').classList.add('active');
-        }
-
-        // ============================================
-        // PRODUCT MANAGEMENT FUNCTIONS - WORKING VERSION
+        // PRODUCT MANAGEMENT FUNCTIONS
         // ============================================
         async function handleProductSubmit(e) {
             e.preventDefault();
             console.log('💾 Saving product...');
-            
-            if (!currentUser || !window.db) {
-                showNotification('Please login first', 'error');
-                return;
-            }
             
             // Get form values
             const name = document.getElementById('productName').value.trim();
             const category = document.getElementById('productCategory').value;
             const stock = parseInt(document.getElementById('productStock').value);
             const price = parseInt(document.getElementById('productPrice').value);
-            const imageUrl = document.getElementById('productImage').value.trim();
-            
-            console.log('Form data:', { name, category, stock, price, imageUrl });
             
             // Validation
             if (!name) {
@@ -1048,67 +1372,46 @@
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
             
             try {
+                // Generate product ID
+                const productId = editingProductId || window.db.ref('products').push().key;
+                
+                // Upload image first if exists
+                let imageUrl = currentImageUrl;
+                if (currentImageFile && !currentImageUrl) {
+                    console.log('📸 Uploading image before saving product...');
+                    imageUrl = await uploadImageToFirebase(productId);
+                }
+                
                 // Prepare product data
                 const productData = {
                     name: name,
                     category: category || 'General',
                     stock: stock,
                     price: price,
-                    imageUrl: imageUrl || '',
-                    addedBy: currentUser.username,
+                    addedBy: 'owner',
                     createdAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString(),
                     status: stock > 0 ? 'available' : 'out_of_stock',
-                    syncToCustomer: true // Flag for customer website
+                    syncToCustomer: true
                 };
                 
-                console.log('Saving product to Firebase:', productData);
+                // Add image URL if available
+                if (imageUrl) {
+                    productData.imageUrl = imageUrl;
+                }
+                
+                console.log('💾 Saving product data:', productData);
                 
                 if (editingProductId) {
                     // Update existing product
                     await window.db.ref('products/' + editingProductId).update(productData);
-                    console.log('✅ Product updated:', editingProductId);
                     showNotification('✅ Product updated successfully!', 'success');
                     editingProductId = null;
-                    
-                    // Log the update
-                    const logRef = window.db.ref('productLogs').push();
-                    logRef.set({
-                        productId: editingProductId,
-                        action: 'update',
-                        by: currentUser.username,
-                        timestamp: new Date().toISOString(),
-                        data: productData
-                    });
                 } else {
-                    // Add new product - Store under 'ownerProducts' and 'products'
-                    const newProductRef = window.db.ref('ownerProducts').push();
-                    const newProductId = newProductRef.key;
-                    
-                    // Save to ownerProducts
-                    await newProductRef.set({
-                        ...productData,
-                        id: newProductId
-                    });
-                    
-                    // Also save to main products collection for customer website
-                    await window.db.ref('products/' + newProductId).set({
-                        ...productData,
-                        id: newProductId
-                    });
-                    
-                    console.log('✅ Product added with ID:', newProductId);
+                    // Add new product
+                    const newProductRef = window.db.ref('products').push();
+                    await newProductRef.set(productData);
                     showNotification('✅ Product added successfully!', 'success');
-                    
-                    // Log the addition
-                    const logRef = window.db.ref('productLogs').push();
-                    logRef.set({
-                        productId: newProductId,
-                        action: 'add',
-                        by: currentUser.username,
-                        timestamp: new Date().toISOString(),
-                        data: productData
-                    });
                 }
                 
                 // Clear form
@@ -1133,19 +1436,11 @@
                 return;
             }
             
-            console.log('📦 Loading products...');
+            const productsRef = window.db.ref('products');
             
-            // Clear existing
-            document.getElementById('productsTable').innerHTML = '';
-            document.getElementById('noProducts').style.display = 'block';
-            
-            // Load from ownerProducts
-            const productsRef = window.db.ref('ownerProducts');
-            
+            // Listen for data changes
             productsRef.on('value', (snapshot) => {
                 const data = snapshot.val();
-                console.log('Raw data from Firebase:', data);
-                
                 products = [];
                 
                 if (data) {
@@ -1156,21 +1451,16 @@
                         });
                     });
                     
-                    console.log(`✅ Loaded ${products.length} products`);
+                    console.log(`📦 Loaded ${products.length} products`);
                 } else {
                     console.log('ℹ️ No products found in database');
                 }
                 
                 displayProducts();
-            }, (error) => {
-                console.error('❌ Error loading products:', error);
-                showNotification('Error loading products', 'error');
             });
         }
 
         function displayProducts(productsToShow = products) {
-            console.log(`🖥️ Displaying ${productsToShow.length} products`);
-            
             const tableBody = document.getElementById('productsTable');
             const noProducts = document.getElementById('noProducts');
             
@@ -1182,15 +1472,8 @@
             
             noProducts.style.display = 'none';
             
-            // Sort by creation date (newest first)
-            productsToShow.sort((a, b) => {
-                return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-            });
-            
-            const html = productsToShow.map(product => {
+            tableBody.innerHTML = productsToShow.map(product => {
                 const isAvailable = product.stock > 0;
-                const safeName = product.name ? product.name.replace(/'/g, "\\'") : '';
-                const safeCategory = (product.category || 'General').replace(/'/g, "\\'");
                 
                 return `
                     <tr class="product-row" data-id="${product.id}">
@@ -1199,12 +1482,12 @@
                                 <div class="product-image">
                                     ${product.imageUrl ? 
                                         `<img src="${product.imageUrl}" alt="${product.name}" 
-                                              onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\"fas fa-box\"></i>';" />` :
+                                              onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<i class=\"fas fa-box\"></i>';" />` :
                                         `<i class="fas fa-box"></i>`
                                     }
                                 </div>
                                 <div>
-                                    <div class="product-name">${product.name || 'Unnamed Product'}</div>
+                                    <div class="product-name">${product.name}</div>
                                     <span class="product-category">${product.category || 'General'}</span>
                                 </div>
                             </div>
@@ -1214,19 +1497,19 @@
                         </td>
                         <td>
                             <span class="product-stock ${isAvailable ? 'stock-available' : 'stock-out'}">
-                                ${product.stock || 0} units
+                                ${product.stock} units
                             </span>
                         </td>
-                        <td class="product-price">₹${product.price || 0}</td>
+                        <td class="product-price">₹${product.price}</td>
                         <td>
                             <div class="product-actions">
                                 <button class="action-btn edit-btn" onclick="editProduct('${product.id}')" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="action-btn toggle-btn" onclick="toggleStock('${product.id}', ${product.stock || 0})" title="${isAvailable ? 'Mark Out of Stock' : 'Mark Available'}">
+                                <button class="action-btn toggle-btn" onclick="toggleStock('${product.id}', ${product.stock})" title="${isAvailable ? 'Mark Out of Stock' : 'Mark Available'}">
                                     <i class="fas ${isAvailable ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
                                 </button>
-                                <button class="action-btn delete-btn" onclick="showDeleteModal('${product.id}', '${safeName}')" title="Delete">
+                                <button class="action-btn delete-btn" onclick="showDeleteModal('${product.id}', '${product.name.replace(/'/g, "\\'")}')" title="Delete">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -1234,14 +1517,9 @@
                     </tr>
                 `;
             }).join('');
-            
-            tableBody.innerHTML = html;
-            console.log('✅ Products displayed in table');
         }
 
         function editProduct(productId) {
-            console.log('✏️ Editing product:', productId);
-            
             const product = products.find(p => p.id === productId);
             if (!product) {
                 showNotification('Product not found', 'error');
@@ -1251,82 +1529,57 @@
             editingProductId = productId;
             
             // Fill form
-            document.getElementById('productName').value = product.name || '';
+            document.getElementById('productName').value = product.name;
             document.getElementById('productCategory').value = product.category || '';
-            document.getElementById('productStock').value = product.stock || 0;
-            document.getElementById('productPrice').value = product.price || 0;
-            document.getElementById('productImage').value = product.imageUrl || '';
+            document.getElementById('productStock').value = product.stock;
+            document.getElementById('productPrice').value = product.price;
+            
+            // Handle image
+            if (product.imageUrl) {
+                document.getElementById('previewImage').src = product.imageUrl;
+                document.getElementById('imagePreview').style.display = 'block';
+                currentImageUrl = product.imageUrl;
+                currentImageFile = null; // No file, just URL
+            } else {
+                document.getElementById('imagePreview').style.display = 'none';
+                currentImageUrl = null;
+                currentImageFile = null;
+            }
             
             // Update button text
             const saveBtn = document.getElementById('saveBtn');
             saveBtn.innerHTML = '<i class="fas fa-edit"></i> Update Product';
             
-            // Scroll to form
-            document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
-            
             showNotification(`Editing: ${product.name}`, 'success');
         }
 
         function toggleStock(productId, currentStock) {
-            console.log('🔄 Toggling stock for:', productId);
-            
-            if (!window.db) {
-                showNotification('Database not connected', 'error');
-                return;
-            }
-            
             const newStock = currentStock > 0 ? 0 : 10;
             
-            // Update in ownerProducts
-            window.db.ref('ownerProducts/' + productId).update({
+            window.db.ref('products/' + productId).update({
                 stock: newStock,
                 updatedAt: new Date().toISOString(),
                 status: newStock > 0 ? 'available' : 'out_of_stock'
             }).then(() => {
-                // Also update in main products for customer website
-                return window.db.ref('products/' + productId).update({
-                    stock: newStock,
-                    updatedAt: new Date().toISOString(),
-                    status: newStock > 0 ? 'available' : 'out_of_stock'
-                });
-            }).then(() => {
-                showNotification(`✅ Stock updated to ${newStock} units`, 'success');
+                showNotification(`Stock updated to ${newStock} units`, 'success');
             }).catch(error => {
-                console.error('Error updating stock:', error);
                 showNotification('Error updating stock', 'error');
             });
         }
 
         function showDeleteModal(productId, productName) {
-            console.log('🗑️ Delete modal for:', productId);
             productToDelete = productId;
             const displayName = productName || 'this product';
             document.getElementById('deleteMessage').textContent = 
-                `Are you sure you want to delete "${displayName}"? This will remove it from customer website too.`;
+                `Are you sure you want to delete "${displayName}"?`;
             document.getElementById('deleteModal').classList.add('active');
         }
 
         async function confirmDelete() {
             if (productToDelete && window.db) {
-                console.log('✅ Confirming delete for:', productToDelete);
-                
                 try {
-                    // Delete from ownerProducts
-                    await window.db.ref('ownerProducts/' + productToDelete).remove();
-                    
-                    // Also delete from main products (customer website)
                     await window.db.ref('products/' + productToDelete).remove();
-                    
-                    showNotification('✅ Product deleted successfully', 'success');
-                    
-                    // Log the deletion
-                    const logRef = window.db.ref('productLogs').push();
-                    logRef.set({
-                        productId: productToDelete,
-                        action: 'delete',
-                        by: currentUser.username,
-                        timestamp: new Date().toISOString()
-                    });
+                    showNotification('Product deleted successfully', 'success');
                     
                 } catch (error) {
                     console.error('Error deleting product:', error);
@@ -1340,31 +1593,42 @@
 
         function clearForm() {
             console.log('🧹 Clearing form');
+            
             editingProductId = null;
+            currentImageFile = null;
+            currentImageUrl = null;
+            
+            // Reset form
             document.getElementById('productForm').reset();
             document.getElementById('productCategory').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imageFile').value = '';
+            document.getElementById('uploadStatus').style.display = 'none';
+            
+            // Reset to device upload mode
+            setUploadMode('device');
             
             // Reset button text
             const saveBtn = document.getElementById('saveBtn');
             saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Product';
+            
+            showNotification('Form cleared. Ready for new product.', 'info');
         }
 
         function performSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            console.log('🔍 Searching for:', query);
             
             if (!query) {
                 displayProducts();
                 return;
             }
             
-            const searchResults = products.filter(product => {
-                const nameMatch = product.name && product.name.toLowerCase().includes(query);
-                const categoryMatch = product.category && product.category.toLowerCase().includes(query);
-                return nameMatch || categoryMatch;
-            });
+            const searchResults = products.filter(product =>
+                product.name.toLowerCase().includes(query) ||
+                (product.category && product.category.toLowerCase().includes(query))
+            );
             
-            console.log(`Found ${searchResults.length} results`);
+            console.log(`🔍 Found ${searchResults.length} results`);
             displayProducts(searchResults);
         }
 
@@ -1372,8 +1636,6 @@
         // UTILITY FUNCTIONS
         // ============================================
         function showNotification(message, type = 'success') {
-            console.log(`📢 Notification [${type}]:`, message);
-            
             // Remove existing notifications
             const existing = document.querySelectorAll('.notification');
             existing.forEach(n => n.remove());
@@ -1382,13 +1644,13 @@
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
                 <span>${message}</span>
             `;
             
             document.body.appendChild(notification);
             
-            // Auto-remove after 3 seconds
+            // Auto-remove after 5 seconds
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.style.animation = 'slideIn 0.3s ease reverse';
@@ -1398,7 +1660,7 @@
                         }
                     }, 300);
                 }
-            }, 3000);
+            }, 5000);
         }
 
         // ============================================
@@ -1407,11 +1669,20 @@
         window.editProduct = editProduct;
         window.toggleStock = toggleStock;
         window.showDeleteModal = showDeleteModal;
+        window.retryUpload = retryUpload;
+        window.removeImage = removeImage;
 
-        // Debug info
-        console.log('🚀 Owner Portal v1.0 Loaded');
-        console.log('📊 Firebase Project: online-shopping-c3081');
-        console.log('🔗 Database URL: https://online-shopping-c3081-default-rtdb.firebaseio.com/');
+        // Clean up camera on page unload
+        window.addEventListener('beforeunload', () => {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+            }
+        });
+
+        console.log('🚀 Owner Portal Loaded');
+        console.log('📸 Image Upload System: FIXED & IMPROVED');
+        console.log('🎥 Camera Capture: ENABLED');
+        console.log('🔗 No Login Required - Direct Access');
     </script>
 </body>
 </html>
