@@ -8,7 +8,6 @@
     <!-- Firebase CDN -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
     
     <style>
         /* ===== RESET & BASE STYLES ===== */
@@ -18,28 +17,13 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #60a5fa;
-            --secondary: #8b5cf6;
-            --accent: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --light: #f8fafc;
-            --dark: #1e293b;
-            --border: #cbd5e1;
-            --radius: 10px;
-            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            --glass: rgba(255, 255, 255, 0.9);
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: var(--dark);
+            color: #1e293b;
             line-height: 1.6;
+            padding: 20px;
         }
 
         /* ===== LOADING SCREEN ===== */
@@ -49,7 +33,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark);
+            background: #1e293b;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -63,7 +47,7 @@
             height: 50px;
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: var(--primary);
+            border-top-color: #2563eb;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
         }
@@ -75,6 +59,12 @@
         /* ===== MAIN CONTAINER ===== */
         .main-container {
             display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .main-container.active {
@@ -83,22 +73,9 @@
 
         /* ===== HEADER ===== */
         .main-header {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: white;
+            padding: 25px 30px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .brand {
@@ -108,42 +85,28 @@
         }
 
         .brand-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2563eb, #8b5cf6);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 20px;
+            font-size: 24px;
         }
 
         .brand-text h1 {
-            font-size: 20px;
-            color: var(--dark);
-            margin-bottom: 2px;
-        }
-
-        .brand-text p {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .header-controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
+            font-size: 24px;
+            color: #1e293b;
+            margin-bottom: 5px;
         }
 
         /* ===== MAIN CONTENT ===== */
         .main-content {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
             display: grid;
             grid-template-columns: 350px 1fr;
-            gap: 30px;
+            min-height: 70vh;
         }
 
         @media (max-width: 1024px) {
@@ -154,48 +117,57 @@
 
         /* ===== SIDEBAR FORM ===== */
         .sidebar {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            height: fit-content;
-            position: sticky;
-            top: 100px;
+            background: #f8fafc;
+            padding: 30px;
+            border-right: 1px solid #e2e8f0;
         }
 
         .form-title {
-            font-size: 18px;
-            color: var(--dark);
-            margin-bottom: 20px;
+            font-size: 20px;
+            color: #1e293b;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .form-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        /* Image Upload Styles */
-        .image-upload-section {
+        .form-group {
             margin-bottom: 20px;
         }
 
-        .image-upload-label {
+        .form-label {
             display: block;
             margin-bottom: 8px;
-            color: var(--dark);
+            color: #1e293b;
             font-weight: 500;
             font-size: 14px;
         }
 
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Image Upload Styles */
+        .image-upload-section {
+            margin-bottom: 25px;
+        }
+
         .image-upload-box {
-            border: 2px dashed var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 30px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
@@ -203,14 +175,14 @@
         }
 
         .image-upload-box:hover {
-            border-color: var(--primary);
-            background: #f8fafc;
+            border-color: #2563eb;
+            background: #f1f5f9;
         }
 
         .image-upload-icon {
-            font-size: 40px;
-            color: var(--border);
-            margin-bottom: 10px;
+            font-size: 48px;
+            color: #94a3b8;
+            margin-bottom: 15px;
         }
 
         .image-upload-text {
@@ -233,9 +205,10 @@
 
         .preview-image {
             width: 100%;
-            max-height: 200px;
+            height: 180px;
             object-fit: cover;
-            border-radius: var(--radius);
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
         }
 
         .image-actions {
@@ -244,10 +217,16 @@
             margin-top: 10px;
         }
 
+        .upload-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
         .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: var(--radius);
+            border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -259,19 +238,18 @@
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: #2563eb;
             color: white;
         }
 
         .btn-primary:hover {
-            background: var(--primary-dark);
+            background: #1d4ed8;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
         }
 
         .btn-secondary {
             background: #e2e8f0;
-            color: var(--dark);
+            color: #1e293b;
         }
 
         .btn-secondary:hover {
@@ -279,7 +257,7 @@
         }
 
         .btn-danger {
-            background: var(--danger);
+            background: #ef4444;
             color: white;
         }
 
@@ -287,46 +265,30 @@
             background: #dc2626;
         }
 
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+        }
+
         .btn-sm {
             padding: 8px 16px;
             font-size: 14px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 16px;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
         }
 
         /* ===== PRODUCTS SECTION ===== */
         .products-section {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            padding: 30px;
+            background: white;
         }
 
         .section-header {
@@ -334,11 +296,13 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .section-title {
-            font-size: 18px;
-            color: var(--dark);
+            font-size: 20px;
+            color: #1e293b;
         }
 
         .search-box {
@@ -348,16 +312,16 @@
 
         .search-box input {
             width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
+            padding: 12px 45px 12px 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
             font-size: 14px;
             background: white;
         }
 
         .search-btn {
             position: absolute;
-            right: 10px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
@@ -371,13 +335,13 @@
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: var(--radius);
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .table-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
         }
 
@@ -389,7 +353,7 @@
         }
 
         .product-row {
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .product-row:hover {
@@ -408,15 +372,15 @@
         }
 
         .product-image {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 8px;
             background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #64748b;
-            font-size: 20px;
+            font-size: 24px;
             overflow: hidden;
             flex-shrink: 0;
         }
@@ -430,13 +394,14 @@
         .product-name {
             font-weight: 600;
             margin-bottom: 5px;
+            color: #1e293b;
         }
 
         .product-category {
             font-size: 12px;
             color: #64748b;
             background: #f1f5f9;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
             display: inline-block;
         }
@@ -446,16 +411,17 @@
         }
 
         .stock-available {
-            color: var(--accent);
+            color: #10b981;
         }
 
         .stock-out {
-            color: var(--danger);
+            color: #ef4444;
         }
 
         .product-price {
             font-weight: 700;
-            color: var(--primary);
+            color: #2563eb;
+            font-size: 18px;
         }
 
         .product-actions {
@@ -464,8 +430,8 @@
         }
 
         .action-btn {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -473,50 +439,29 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .edit-btn {
             background: #dbeafe;
-            color: var(--primary);
+            color: #2563eb;
         }
 
         .edit-btn:hover {
-            background: var(--primary);
+            background: #2563eb;
             color: white;
+            transform: scale(1.1);
         }
 
         .delete-btn {
             background: #fee2e2;
-            color: var(--danger);
+            color: #ef4444;
         }
 
         .delete-btn:hover {
-            background: var(--danger);
+            background: #ef4444;
             color: white;
-        }
-
-        .toggle-btn {
-            background: #fef3c7;
-            color: var(--warning);
-        }
-
-        .toggle-btn:hover {
-            background: var(--warning);
-            color: white;
-        }
-
-        /* ===== NO PRODUCTS ===== */
-        .no-products {
-            text-align: center;
-            padding: 50px 20px;
-            color: #64748b;
-        }
-
-        .no-products i {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.5;
+            transform: scale(1.1);
         }
 
         /* ===== NOTIFICATION ===== */
@@ -526,22 +471,26 @@
             right: 20px;
             padding: 15px 20px;
             background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             gap: 10px;
             z-index: 1000;
             animation: slideIn 0.3s ease;
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid #2563eb;
         }
 
         .notification.success {
-            border-left-color: var(--accent);
+            border-left-color: #10b981;
         }
 
         .notification.error {
-            border-left-color: var(--danger);
+            border-left-color: #ef4444;
+        }
+
+        .notification.info {
+            border-left-color: #2563eb;
         }
 
         @keyframes slideIn {
@@ -563,11 +512,10 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            display: none;
         }
 
         .modal.active {
@@ -577,15 +525,16 @@
         .modal-content {
             background: white;
             padding: 30px;
-            border-radius: var(--radius);
+            border-radius: 10px;
             max-width: 500px;
             width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
         .modal-title {
             font-size: 20px;
             margin-bottom: 15px;
-            color: var(--dark);
+            color: #1e293b;
         }
 
         .modal-message {
@@ -602,43 +551,12 @@
 
         /* ===== FOOTER ===== */
         .main-footer {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            margin-top: 50px;
-            padding: 20px;
+            background: #f8fafc;
+            padding: 20px 30px;
             text-align: center;
             color: #64748b;
             font-size: 14px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .main-content {
-                padding: 0 15px;
-            }
-            
-            .products-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .section-header {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .search-box {
-                width: 100%;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-            }
+            border-top: 1px solid #e2e8f0;
         }
     </style>
     
@@ -656,21 +574,13 @@
     <div class="main-container" id="mainContainer">
         <!-- Header -->
         <header class="main-header">
-            <div class="header-content">
-                <div class="brand">
-                    <div class="brand-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="brand-text">
-                        <h1>Chandni Parlor 127</h1>
-                        <p>Owner Product Management</p>
-                    </div>
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fas fa-store"></i>
                 </div>
-                
-                <div class="header-controls">
-                    <div style="font-size: 14px; color: #64748b;">
-                        <i class="fas fa-user"></i> Owner
-                    </div>
+                <div class="brand-text">
+                    <h1>Chandni Parlor 127</h1>
+                    <p>Owner Product Management</p>
                 </div>
             </div>
         </header>
@@ -713,18 +623,32 @@
                     
                     <!-- Image Upload Section -->
                     <div class="image-upload-section">
-                        <label class="image-upload-label">Product Photo</label>
+                        <label class="form-label">Product Photo (Optional)</label>
                         <div class="image-upload-box" id="imageUploadBox">
                             <div class="image-upload-icon">
                                 <i class="fas fa-cloud-upload-alt"></i>
                             </div>
                             <div class="image-upload-text">
                                 <p>Click to upload product photo</p>
-                                <p style="font-size: 12px; margin-top: 5px;">JPG, PNG or WebP (Max 5MB)</p>
+                                <p style="font-size: 12px; margin-top: 5px;">JPG, PNG or WebP</p>
+                                <p style="font-size: 11px; color: #ef4444; margin-top: 5px;">
+                                    <i class="fas fa-info-circle"></i> Image will be saved permanently in database
+                                </p>
                             </div>
                             <input type="file" id="imageFile" accept="image/*">
                         </div>
                         
+                        <!-- Upload Buttons -->
+                        <div class="upload-buttons">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="triggerFileUpload()">
+                                <i class="fas fa-folder-open"></i> Browse Files
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm" onclick="openCamera()">
+                                <i class="fas fa-camera"></i> Take Photo
+                            </button>
+                        </div>
+                        
+                        <!-- Image Preview -->
                         <div class="image-preview" id="imagePreview">
                             <img id="previewImage" src="" alt="Preview" class="preview-image">
                             <div class="image-actions">
@@ -792,6 +716,9 @@
         <footer class="main-footer">
             <p>© 2024 Chandni Parlor 127 | Owner Management System</p>
             <p>Products added here will automatically appear on customer website</p>
+            <p style="margin-top: 10px; font-size: 12px; color: #10b981;">
+                <i class="fas fa-check-circle"></i> Images are permanently saved in database
+            </p>
         </footer>
     </div>
 
@@ -815,7 +742,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Code - SIMPLIFIED VERSION -->
+    <!-- JavaScript Code - BASE64 IMAGE SAVE -->
     <script>
         // ============================================
         // FIREBASE CONFIGURATION
@@ -832,95 +759,83 @@
         };
 
         // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        let products = [];
+        let editingProductId = null;
+        let currentImageFile = null;
+        let productToDelete = null;
+        let cameraStream = null;
+
+        // ============================================
         // INITIALIZE APP
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
-            initApp();
-        });
-
-        async function initApp() {
+            // Initialize Firebase
             try {
-                // Initialize Firebase
                 if (!firebase.apps.length) {
                     firebase.initializeApp(firebaseConfig);
                 }
                 
-                window.db = firebase.database();
-                window.storage = firebase.storage();
-                
                 console.log('✅ Firebase initialized successfully');
                 
-                // Directly show main content (no login)
+                // Show main content
                 setTimeout(() => {
                     document.getElementById('loadingScreen').style.display = 'none';
                     document.getElementById('mainContainer').classList.add('active');
+                    
+                    // Setup event listeners
+                    setupEventListeners();
+                    
+                    // Load products
+                    loadProducts();
                 }, 1000);
                 
-                setupEventListeners();
-                loadProducts();
-                
             } catch (error) {
-                console.error('❌ Firebase initialization error:', error);
-                document.getElementById('loadingScreen').innerHTML = `
-                    <div style="text-align: center; color: white; padding: 20px;">
-                        <i class="fas fa-check-circle" style="font-size: 48px; margin-bottom: 20px; color: #10b981;"></i>
-                        <h2>Connected!</h2>
-                        <button onclick="location.reload()" style="margin-top: 30px; padding: 12px 24px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                            Continue to Dashboard
-                        </button>
-                    </div>
-                `;
+                console.error('Firebase initialization error:', error);
+                showNotification('Firebase connection error', 'error');
             }
-        }
-
-        // ============================================
-        // APPLICATION STATE
-        // ============================================
-        let products = [];
-        let editingProductId = null;
-        let productToDelete = null;
-        let currentImageFile = null;
+        });
 
         // ============================================
         // EVENT LISTENERS SETUP
         // ============================================
         function setupEventListeners() {
-            // Product form
-            document.getElementById('productForm').addEventListener('submit', handleProductSubmit);
+            // Form submission
+            document.getElementById('productForm').addEventListener('submit', saveProduct);
+            
+            // Clear button
             document.getElementById('clearBtn').addEventListener('click', clearForm);
             
             // Image upload
-            document.getElementById('imageUploadBox').addEventListener('click', () => {
-                document.getElementById('imageFile').click();
-            });
+            document.getElementById('imageUploadBox').addEventListener('click', triggerFileUpload);
             document.getElementById('imageFile').addEventListener('change', handleImageUpload);
             
             // Search
             document.getElementById('searchBtn').addEventListener('click', performSearch);
             document.getElementById('searchInput').addEventListener('input', performSearch);
             
-            // Modal
-            document.getElementById('cancelDelete').addEventListener('click', () => {
+            // Delete modal
+            document.getElementById('cancelDelete').addEventListener('click', function() {
                 document.getElementById('deleteModal').classList.remove('active');
             });
             document.getElementById('confirmDelete').addEventListener('click', confirmDelete);
         }
 
         // ============================================
-        // IMAGE UPLOAD FUNCTIONS
+        // IMAGE FUNCTIONS
         // ============================================
+        function triggerFileUpload() {
+            document.getElementById('imageFile').click();
+        }
+
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
             
-            // Validate file
+            // Check if it's an image file
             if (!file.type.startsWith('image/')) {
-                showNotification('Please select an image file', 'error');
-                return;
-            }
-            
-            if (file.size > 5 * 1024 * 1024) { // 5MB limit
-                showNotification('Image size should be less than 5MB', 'error');
+                showNotification('Please select an image file (JPG, PNG, WebP)', 'error');
                 return;
             }
             
@@ -931,7 +846,7 @@
             reader.onload = function(e) {
                 document.getElementById('previewImage').src = e.target.result;
                 document.getElementById('imagePreview').style.display = 'block';
-                showNotification('Image selected successfully', 'success');
+                showNotification('✅ Image selected successfully', 'success');
             };
             reader.readAsDataURL(file);
         }
@@ -948,35 +863,20 @@
             showNotification('Image removed', 'warning');
         }
 
-        async function uploadImageToFirebase(productId) {
-            if (!currentImageFile) return null;
-            
-            try {
-                const storageRef = window.storage.ref();
-                const timestamp = Date.now();
-                const fileName = `product_${timestamp}_${currentImageFile.name}`;
-                const imageRef = storageRef.child(`products/${productId}/${fileName}`);
-                
-                // Show upload progress
-                showNotification('Uploading image...', 'info');
-                
-                const snapshot = await imageRef.put(currentImageFile);
-                const downloadURL = await snapshot.ref.getDownloadURL();
-                
-                showNotification('Image uploaded successfully', 'success');
-                return downloadURL;
-                
-            } catch (error) {
-                console.error('Error uploading image:', error);
-                showNotification('Error uploading image', 'error');
-                return null;
-            }
+        // Convert file to base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
         }
 
         // ============================================
-        // PRODUCT MANAGEMENT FUNCTIONS
+        // PRODUCT SAVE FUNCTION - BASE64 IMAGE SAVE
         // ============================================
-        async function handleProductSubmit(e) {
+        async function saveProduct(e) {
             e.preventDefault();
             
             // Get form values
@@ -1001,13 +901,15 @@
                 return;
             }
             
-            // Disable save button
+            // Disable save button and show loading
             const saveBtn = document.getElementById('saveBtn');
             const originalText = saveBtn.innerHTML;
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
             
             try {
+                console.log('Starting product save process...');
+                
                 // Prepare product data
                 const productData = {
                     name: name,
@@ -1021,77 +923,173 @@
                     syncToCustomer: true
                 };
                 
-                console.log('Saving product:', productData);
+                console.log('Product data prepared:', productData);
                 
-                // Upload image if exists
-                let imageUrl = '';
+                // Convert image to base64 if exists
                 if (currentImageFile) {
-                    const imageId = editingProductId || window.db.ref('products').push().key;
-                    imageUrl = await uploadImageToFirebase(imageId);
-                    if (imageUrl) {
-                        productData.imageUrl = imageUrl;
+                    console.log('Converting image to base64...');
+                    
+                    try {
+                        // Convert image to base64
+                        const base64Image = await fileToBase64(currentImageFile);
+                        console.log('Image converted to base64, length:', base64Image.length);
+                        
+                        // Store base64 image in database
+                        productData.imageBase64 = base64Image;
+                        productData.hasImage = true;
+                        
+                        // Also store a compressed version for thumbnail
+                        const compressedImage = await compressImage(base64Image);
+                        productData.imageThumbnail = compressedImage;
+                        
+                        showNotification('✅ Image processed successfully', 'success');
+                        
+                    } catch (imageError) {
+                        console.error('Image conversion error:', imageError);
+                        showNotification('⚠️ Image processing failed. Saving without image.', 'warning');
                     }
+                } else {
+                    console.log('No image selected');
+                    productData.hasImage = false;
                 }
+                
+                // Save to Firebase Database
+                console.log('Saving to Firebase Database...');
+                const database = firebase.database();
                 
                 if (editingProductId) {
                     // Update existing product
-                    await window.db.ref('products/' + editingProductId).update(productData);
+                    console.log('Updating product:', editingProductId);
+                    await database.ref('products/' + editingProductId).update(productData);
+                    console.log('✅ Product updated successfully');
                     showNotification('✅ Product updated successfully!', 'success');
                     editingProductId = null;
                 } else {
                     // Add new product
-                    const newProductRef = window.db.ref('products').push();
+                    console.log('Adding new product...');
+                    const newProductRef = database.ref('products').push();
                     await newProductRef.set(productData);
+                    console.log('✅ Product added successfully');
+                    console.log('Product ID:', newProductRef.key);
                     showNotification('✅ Product added successfully!', 'success');
                 }
                 
                 // Clear form
                 clearForm();
                 
-                // Force reload products
+                // Reload products list
                 loadProducts();
                 
             } catch (error) {
-                console.error('❌ Error saving product:', error);
-                showNotification('Error: ' + error.message, 'error');
+                console.error('❌ Error in product submission:', error);
+                console.error('Error details:', error.message);
+                showNotification('❌ Error: ' + error.message, 'error');
             } finally {
-                // Re-enable save button
+                // ALWAYS re-enable save button
+                console.log('Re-enabling save button');
                 saveBtn.disabled = false;
                 saveBtn.innerHTML = originalText;
             }
         }
 
-        function loadProducts() {
-            if (!window.db) {
-                console.error('Database not available');
-                return;
-            }
-            
-            const productsRef = window.db.ref('products');
-            
-            // Listen for data changes
-            productsRef.on('value', (snapshot) => {
-                const data = snapshot.val();
-                products = [];
+        // Compress image for thumbnail
+        function compressImage(base64Image) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = base64Image;
                 
-                if (data) {
-                    Object.keys(data).forEach(key => {
-                        products.push({
-                            id: key,
-                            ...data[key]
-                        });
-                    });
-                }
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set canvas dimensions
+                    const maxWidth = 200;
+                    const maxHeight = 200;
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    // Calculate new dimensions
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width = Math.round((width * maxHeight) / height);
+                            height = maxHeight;
+                        }
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    // Draw and compress
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                    resolve(compressedBase64);
+                };
                 
-                displayProducts();
+                img.onerror = function() {
+                    resolve(base64Image); // Return original if compression fails
+                };
             });
         }
 
-        function displayProducts(productsToShow = products) {
+        // ============================================
+        // PRODUCT LIST FUNCTIONS
+        // ============================================
+        function loadProducts() {
+            try {
+                const database = firebase.database();
+                const productsRef = database.ref('products');
+                
+                console.log('Loading products from Firebase...');
+                
+                // Listen for data changes
+                productsRef.on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    products = [];
+                    
+                    console.log('Products data received:', data);
+                    
+                    if (data) {
+                        Object.keys(data).forEach(key => {
+                            const product = {
+                                id: key,
+                                ...data[key]
+                            };
+                            
+                            // Use thumbnail if available, otherwise full image
+                            if (product.imageThumbnail) {
+                                product.displayImage = product.imageThumbnail;
+                            } else if (product.imageBase64) {
+                                product.displayImage = product.imageBase64;
+                            } else {
+                                product.displayImage = null;
+                            }
+                            
+                            products.push(product);
+                        });
+                        console.log('Total products loaded:', products.length);
+                    } else {
+                        console.log('No products found in database');
+                    }
+                    
+                    displayProducts();
+                });
+                
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showNotification('Error loading products', 'error');
+            }
+        }
+
+        function displayProducts(filteredProducts = products) {
             const tableBody = document.getElementById('productsTable');
             const noProducts = document.getElementById('noProducts');
             
-            if (productsToShow.length === 0) {
+            if (filteredProducts.length === 0) {
                 tableBody.innerHTML = '';
                 noProducts.style.display = 'block';
                 return;
@@ -1099,7 +1097,7 @@
             
             noProducts.style.display = 'none';
             
-            tableBody.innerHTML = productsToShow.map(product => {
+            tableBody.innerHTML = filteredProducts.map(product => {
                 const isAvailable = product.stock > 0;
                 
                 return `
@@ -1107,9 +1105,9 @@
                         <td>
                             <div class="product-info">
                                 <div class="product-image">
-                                    ${product.imageUrl ? 
-                                        `<img src="${product.imageUrl}" alt="${product.name}" 
-                                              onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\"fas fa-box\"></i>';" />` :
+                                    ${product.displayImage ? 
+                                        `<img src="${product.displayImage}" alt="${product.name}" 
+                                              style="width: 100%; height: 100%; object-fit: cover;" />` :
                                         `<i class="fas fa-box"></i>`
                                     }
                                 </div>
@@ -1119,9 +1117,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            ${product.category || 'General'}
-                        </td>
+                        <td>${product.category || 'General'}</td>
                         <td>
                             <span class="product-stock ${isAvailable ? 'stock-available' : 'stock-out'}">
                                 ${product.stock} units
@@ -1132,9 +1128,6 @@
                             <div class="product-actions">
                                 <button class="action-btn edit-btn" onclick="editProduct('${product.id}')" title="Edit">
                                     <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn toggle-btn" onclick="toggleStock('${product.id}', ${product.stock})" title="${isAvailable ? 'Mark Out of Stock' : 'Mark Available'}">
-                                    <i class="fas ${isAvailable ? 'fa-toggle-on' : 'fa-toggle-off'}"></i>
                                 </button>
                                 <button class="action-btn delete-btn" onclick="showDeleteModal('${product.id}', '${product.name}')" title="Delete">
                                     <i class="fas fa-trash"></i>
@@ -1159,8 +1152,8 @@
             document.getElementById('productPrice').value = product.price;
             
             // Handle image
-            if (product.imageUrl) {
-                document.getElementById('previewImage').src = product.imageUrl;
+            if (product.imageBase64) {
+                document.getElementById('previewImage').src = product.imageBase64;
                 document.getElementById('imagePreview').style.display = 'block';
                 currentImageFile = null; // Keep existing image
             } else {
@@ -1175,20 +1168,6 @@
             showNotification(`Editing: ${product.name}`, 'success');
         }
 
-        function toggleStock(productId, currentStock) {
-            const newStock = currentStock > 0 ? 0 : 10;
-            
-            window.db.ref('products/' + productId).update({
-                stock: newStock,
-                updatedAt: new Date().toISOString(),
-                status: newStock > 0 ? 'available' : 'out_of_stock'
-            }).then(() => {
-                showNotification(`Stock updated to ${newStock} units`, 'success');
-            }).catch(error => {
-                showNotification('Error updating stock', 'error');
-            });
-        }
-
         function showDeleteModal(productId, productName) {
             productToDelete = productId;
             document.getElementById('deleteMessage').textContent = 
@@ -1197,19 +1176,19 @@
         }
 
         async function confirmDelete() {
-            if (productToDelete && window.db) {
-                try {
-                    await window.db.ref('products/' + productToDelete).remove();
-                    showNotification('Product deleted successfully', 'success');
-                    
-                } catch (error) {
-                    console.error('Error deleting product:', error);
-                    showNotification('Error deleting product', 'error');
-                }
-                
-                document.getElementById('deleteModal').classList.remove('active');
-                productToDelete = null;
+            if (!productToDelete) return;
+            
+            try {
+                const database = firebase.database();
+                await database.ref('products/' + productToDelete).remove();
+                showNotification('✅ Product deleted successfully', 'success');
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                showNotification('❌ Error deleting product', 'error');
             }
+            
+            document.getElementById('deleteModal').classList.remove('active');
+            productToDelete = null;
         }
 
         function clearForm() {
@@ -1223,6 +1202,8 @@
             // Reset button text
             const saveBtn = document.getElementById('saveBtn');
             saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Product';
+            
+            console.log('Form cleared');
         }
 
         function performSearch() {
@@ -1252,32 +1233,75 @@
             // Create new notification
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'error') icon = 'exclamation-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
             notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <i class="fas fa-${icon}"></i>
                 <span>${message}</span>
             `;
             
             document.body.appendChild(notification);
             
-            // Auto-remove after 3 seconds
+            // Auto-remove after 4 seconds
             setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+                if (notification.parentNode) {
+                    notification.style.animation = 'slideIn 0.3s ease reverse';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 4000);
         }
 
         // ============================================
-        // EXPORT FUNCTIONS TO WINDOW OBJECT
+        // CUSTOMER WEBSITE CODE SAMPLE
         // ============================================
-        window.editProduct = editProduct;
-        window.toggleStock = toggleStock;
-        window.showDeleteModal = showDeleteModal;
-        window.changeImage = changeImage;
-        window.removeImage = removeImage;
+        // Customer website par ye code use karna padega:
+        /*
+        // Customer website code to display products
+        function loadProductsForCustomers() {
+            const database = firebase.database();
+            const productsRef = database.ref('products');
+            
+            productsRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                const productList = document.getElementById('customerProducts');
+                
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const product = data[key];
+                        
+                        // Create product card
+                        const productCard = document.createElement('div');
+                        productCard.className = 'product-card';
+                        
+                        let imageHtml = '<div class="no-image">No Image</div>';
+                        if (product.imageThumbnail) {
+                            imageHtml = `<img src="${product.imageThumbnail}" alt="${product.name}">`;
+                        } else if (product.imageBase64) {
+                            imageHtml = `<img src="${product.imageBase64}" alt="${product.name}">`;
+                        }
+                        
+                        productCard.innerHTML = `
+                            <div class="product-image">${imageHtml}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">₹${product.price}</div>
+                            <button class="buy-btn">Add to Cart</button>
+                        `;
+                        
+                        productList.appendChild(productCard);
+                    });
+                }
+            });
+        }
+        */
 
-        console.log('🚀 Owner Portal Loaded');
-        console.log('📸 Image Upload Enabled');
-        console.log('🔗 No Login Required - Direct Access');
+        console.log('🚀 Owner Portal Loaded Successfully');
+        console.log('✅ Images will be saved as Base64 in Database');
+        console.log('✅ Permanent storage - no Firebase Storage needed');
+        console.log('✅ Customer website can easily access images');
     </script>
 </body>
 </html>
