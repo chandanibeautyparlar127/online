@@ -796,6 +796,10 @@
                 showNotification('Firebase connection error', 'error');
             }
         });
+        // Owner code mein add karo
+        if (productData.imageThumbnail) {
+            productData.imageUrl = productData.imageThumbnail;
+        }
 
         // ============================================
         // EVENT LISTENERS SETUP
